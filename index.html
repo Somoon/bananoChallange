@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="index.css">
+	<title>beepboop</title>
+	<script src="jsScript.js"></script>
+	
+	</head>
+	<body>
+
+		<div id="themeicon">
+			<img src="https://cdn-icons-png.flaticon.com/512/3659/3659789.png" onclick="changeBGColour()">
+		</div>
+
+		<div class="namesList">
+			List of names:
+
+			<input list="listA" onchange="sendSelectedName();this.value=''" id="nameInput">
+			<datalist id="listA" class="hovercoloring" >
+			</datalist>
+			<button id='sortButton' onclick="Sortmepls()">Sort names</button>
+			<br><br><br><br>
+			</div>
+
+
+
+		
+		<div hidden id="noBanAddr"></div>
+		<div class="bData" id="bData" style="display: none;">
+			
+			<table class="tg">
+				<tbody>
+				  <tr>
+					<td class="tg-img" rowspan="3" >
+						<div id="col0-img"></div>
+					</td>
+					<td class="tg-0lax">
+						<div id="choosenName"></div>
+					</td>
+				  </tr>
+				  <tr>
+					<td class="tg-0lax">
+						<div id="choosenAddr"></div>
+					</td>
+				  </tr>
+				  <tr>
+					<td class="tg-0lax">
+						<div id="balance"></div>
+					</td>
+				  </tr>
+				</tbody>
+			</table>
+
+
+			<div class="lHeight">
+				<p>Latest transactions: </p>
+
+				<dl id="transactions">
+					
+					
+				</dl>
+				<span id="limitWarning" class="fRed" hidden>total transacations shown are limited to 30</span>
+				<div class="pages" id="pages">
+					<span id="pNums">
+						
+					</span>
+					
+				</div>
+			</div>
+			
+		</div>
+
+
+
+	</body>
+</html>
+

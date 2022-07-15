@@ -1,0 +1,162 @@
+
+body {
+	
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 16px;
+	overflow-wrap: break-word;
+}
+div.namesList
+{
+	text-align: center;
+}
+
+.arrow {
+	border: solid black;
+	border-width: 0 3px 3px 0;
+	display: inline-block;
+	padding: 3px;
+  }
+  
+  .up {
+	transform: rotate(-135deg);
+	-webkit-transform: rotate(-135deg);
+  }
+  
+  .down {
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+  }
+
+
+.label {
+	color: white;
+	padding: 8px;
+	font-family: Arial;
+ }
+.cGreen {background-color: #04AA6D;} 
+.cBlue {background-color: #2196F3;} 
+.cRed {background-color: #f44336;} 
+
+#hBold
+{
+	font-weight: bold;
+}
+
+
+.lHeight
+{
+	line-height: 1.5;
+	padding: 30px;
+	
+}
+
+.fRed
+{
+	color:red;
+}
+.fGreen
+{
+	color:green;
+}
+
+
+/* MonKey / addr / name table styling */
+
+
+table 
+{
+	border: none;
+}
+
+.col0-img
+{
+	max-width:250px; 
+	display:block;
+}
+.tg .tg-img
+{
+
+	text-align:left;
+	vertical-align:middle;
+	width: 250px;
+}
+
+.tg td
+{
+	font-family:Arial, sans-serif;
+	font-size:16px;
+	overflow-wrap: break-word;
+	padding:7px 5px;
+}
+
+.tg .tg-0lax
+{
+	text-align:left;
+	vertical-align:middle;
+	max-width: 100%;
+	overflow-wrap: anywhere;
+}
+
+@media screen and (max-width: 500px) 
+{
+
+	table 
+	{
+		border: none;
+	}
+	.tg-img
+	{
+		max-width:90px; 
+	text-align:left;
+	vertical-align:middle;
+	width: 100%;
+	}
+
+
+}
+
+#themeicon {
+	position: relative;
+}
+#themeicon img {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 5%;
+    height: auto;
+	max-width:3%;
+}
+
+dd
+{
+	padding: 10px;
+	line-height: 1.5;
+}
+dt
+{
+	margin-left: 25px;
+	
+}
+dd
+{
+	margin-left: 40px;	
+}
+
+button.page 
+{ 
+	background:none;
+	border:none;
+	cursor: pointer;
+	font-weight:bolder;
+}
+
+#pNums
+{
+	position: relative;
+	left: 25px;
+}
+
+button.page.selected
+{
+	text-decoration: underline;
+}
