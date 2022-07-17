@@ -1,19 +1,15 @@
-
 const namesA = 
 [
 	"JungleTV 🍌",
 	"Somoon 🍌",
 	"Tanya",
-	"Colin", 
-	"Gordon",
+	"Colin",
 	"Alison",
 	"OnlyBans 🍌",
 	"Folding 🍌",
 	"Jake",
-	"Caspar",
 	"John",
 	"Snow",
-	"Troy",
 	"BananoPlanet.cc 🍌",
 	"BananOslo 🍌",
 	"Stuart", 
@@ -44,25 +40,31 @@ let currentPage = 0;
 let totalPages = 0;
 let reminder = 0;
 let bDataInit = false;
-let bgColorr = 0;
-const greyColour = "#4e4e4e";
+let localBGColour;
+let bgColorr;
+
+const greyColour = "rgb(82 81 81 / 65%)";//#4e4e4e";
 const yellowColour = "#ffe135";
 const whiteColour = "white";
-//const jungleColour = "rgb(53 155 45)";
+const jungleColour = "rgb(53 155 45)";
 
 window.onload = function()
 {
-	createOptions();
-};
-
-function Sortmepls()
-{
-	namesA.sort();
-	createOptions();
+	insertNames();
+	getColour();
+	changeBGColour();
 
 }
 
-function createOptions()
+function sortNamesArray()
+{
+	namesA.sort();
+	insertNames();
+
+}
+
+//insert names into datalist
+function insertNames()
 {
 	let optionsString="";
 	for (let i=0; i < namesA.length;++i){
@@ -72,6 +74,7 @@ function createOptions()
 		my_list.innerHTML = optionsString;
 }
 
+//process select name from the list and check if have a ban address and retrieve data.
 function sendSelectedName()
 {
 	if(bDataInit == true) {resetAllData();}
@@ -94,9 +97,11 @@ function sendSelectedName()
 			//Addr MonKey
 			document.getElementById("col0-img").innerHTML = '<img src="https://monkey.banano.cc/api/v1/monkey/'+banAddr+'">';
 			
-			if(bDataInit == false) { addInitialTransacationRows(); }
-			parseJsonData(bananoAddresses[selectedName]);
+			//set up transactions rows
+			if(bDataInit == false) { initializeransacationRows(); }
+			parseJsonBody(bananoAddresses[selectedName]);
 
+			//banano address details dection hidden by default.
 			document.getElementById("bData").style.display = "block";
 			document.getElementById("noBanAddr").style.display = "none";
 			bDataInit = true;
@@ -110,19 +115,23 @@ function sendSelectedName()
 	}
 }
 
-function parseJsonData(banAddr)
+//create JSON Body of given address
+function parseJsonBody(banAddr)
 {
-	let data = "";
+	let body = "";
 
 	//for balance
-	data = '{ "action": "account_info","account": "' + banAddr +'" }';
-	sendPOST(data, 0)
+	body = '{ "action": "account_info","account": "' + banAddr +'" }';
+	sendPOST(body, 0)
 
 	//for last three transacations
-	data = '{ "action": "account_history","account": "' + banAddr +'","count": 30, "raw" : 1 }';
-	sendPOST(data, 1)
+	body = '{ "action": "account_history","account": "' + banAddr +'","count": 30, "raw" : 1 }';
+	sendPOST(body, 1)
 }
 
+/*
+Sends POST request of given body
+*/
 function sendPOST(data, dType)
 {
 	let xhr = new XMLHttpRequest();
@@ -134,6 +143,8 @@ function sendPOST(data, dType)
 
 }
 
+// process returned data from POST request. 
+// there are two requested data, account_info and account_history
 function printData(returnData, dType)
 {
 	if (dType == 0)
@@ -148,7 +159,7 @@ function printData(returnData, dType)
 		let jsonResponse = JSON.parse(returnData);
 		history = jsonResponse.history;
 		totalTransacations = history.length;
-
+		document.getElementById("transactionsNo").innerText= totalTransacations;
 		createRows();
 		
 		totalPages = Math.floor(totalTransacations / 3);
@@ -159,7 +170,8 @@ function printData(returnData, dType)
 	}
 }
 
-function addInitialTransacationRows()
+// write HTML code that will have the transactions
+function initializeransacationRows()
 {
 	for(let i = 0; i < 3; i++)
 	{
@@ -168,7 +180,7 @@ function addInitialTransacationRows()
 		let dt = document.createElement("dt");
 		dt.setAttribute("id","dtID"+i);
 		dt.setAttribute("hidden","");
-		dt.setAttribute("style"," cursor: pointer");
+		//dt.setAttribute("style"," cursor: pointer");
 		dt.innerHTML = '<span id="tran'+i+'" onclick="toggleTrans('+i+')"></span>';
 
 		let dd = document.createElement("dd");
@@ -181,6 +193,11 @@ function addInitialTransacationRows()
 	}
 }
 
+/*
+@createPageList()
+@createPage()
+setup the page selector to browse the transactions
+*/
 function createPageList()
 {	
 	let displayedPageNum = currentPage+1;
@@ -197,8 +214,9 @@ function createPageList()
 	document.getElementById("page"+(currentPage+1)).setAttribute("class","page selected");
 	createPage(">",2);
 	createPage(">>",totalPages);
-	
+
 	disablePageButton(currentPage+1);
+	
 }
 
 function createPage(PageStr,displayedPageNum)
@@ -211,10 +229,12 @@ function createPage(PageStr,displayedPageNum)
 	pageElem.setAttribute("onclick","selectPage("+displayedPageNum+")");
 	pageElem.setAttribute("class","page");
 	pageElem.setAttribute("id","page"+PageStr);
-	pageElem.innerHTML = PageStr   //add <span with colouring to show current selected?
+	pageElem.innerHTML = PageStr ;
 	pagesElement.append(pageElem);
 }
 
+
+//setup selected page html code and display new trans and disable the button. shows transactions limit is address has over 30 trans
 function selectPage(displayedPageNum)
 {
 	document.getElementById("page"+(currentPage+1)).setAttribute("class","page");
@@ -253,9 +273,9 @@ function selectPage(displayedPageNum)
 	editPage("<");
 }
 
+//disable selected page button
 function disablePageButton(page)
 {
-	console.log("disable page "+page,currentPage);
 	let toDisableButton = document.getElementById("page"+page);
 	toDisableButton.setAttribute("disabled","");
 
@@ -275,18 +295,19 @@ function disablePageButton(page)
 		document.getElementById("page>").removeAttribute("disabled");
 		document.getElementById("page>>").removeAttribute("disabled");
 	}
-	else if(page == 1 || page == "<<")
+	if(page == 1)
 	{
 		document.getElementById("page<").setAttribute("disabled","");
 		document.getElementById("page<<").setAttribute("disabled","");
 	}
-	if(currentPage == 0)
+	else if(currentPage == 0)
 	{
 		document.getElementById("page<").removeAttribute("disabled");
 		document.getElementById("page<<").removeAttribute("disabled");
 	}
 }
 
+//modify special page button
 function editPage(page)
 {
 
@@ -309,6 +330,7 @@ function editPage(page)
 	}
 }
 
+//hide rows if there are not enough transaction data to populate them
 function hideRows()
 {
 	for(let i = 0; i < 3; i++)
@@ -322,6 +344,8 @@ function hideRows()
 
 	}
 }
+
+//setup transaction row
 function createRows(limit)
 {
 	limit = limit || 3;  // implemented to only print last x rows if its less than 3
@@ -391,6 +415,8 @@ function createRows(limit)
 	}
 }
 
+// Clear/reset page to default when selecting new ban address
+
 function resetAllData()
 {
 	closeTransactions();
@@ -405,6 +431,8 @@ function resetAllData()
 		{ lw.setAttribute("hidden","");}
 
 }
+
+//reset page selector list
 function clearPagelist()
 {
 	if(document.getElementById("page1")==null){return 0;}
@@ -477,26 +505,64 @@ function colourMe(color,str)
 	}
 }
 
+
+// called from html page
 function changeBGColour()
- {
-	switch(bgColorr)
+{
+	setBGColour()
+	switch (localBGColour)
 	{
 		case 0:
-			document.body.style.backgroundColor = greyColour;
-			bgColorr = 1;
+			window.localStorage.setItem("bgColour",2);
+			
 		break;
 		case 1:
-			document.body.style.backgroundColor = yellowColour;
-			bgColorr = 2;
+			window.localStorage.setItem("bgColour",0);
 		break;
-		/*case 2:
-			document.body.style.backgroundColor = jungleColour;
-			bgColorr = 3;
-		break;*/
 		case 2:
-			document.body.style.backgroundColor = whiteColour;
-			bgColorr = 0;
+			window.localStorage.setItem("bgColour",1);
 		break;
 	}
 	
- }
+}
+
+//Sets background color based on stored config or set default
+function setBGColour()
+{
+	localBGColour = ((localBGColour == null) ? parseInt(bgColorr) : localBGColour);
+
+	let bodyElement = document.getElementById("m-c");
+	let bData0 = document.getElementById("bData-0");
+	let bData1 = document.getElementById("bData-1");
+
+	switch (localBGColour)
+	{
+		case 0:
+			bodyElement.style.backgroundColor = whiteColour;
+			bData0.style.backgroundColor = greyColour;
+			bData1.style.backgroundColor = greyColour;
+			localBGColour = 1;
+		break;
+		case 1:
+			bodyElement.style.backgroundColor = jungleColour;
+			bData0.style.backgroundColor = yellowColour;
+			bData1.style.backgroundColor = yellowColour;
+			localBGColour = 2;
+		break;
+		/*case 2:
+			document.body.style.backgroundColor = jungleColour;
+			localBGColour = 3;
+		break;*/
+		case 2:
+			bodyElement.style.backgroundColor = greyColour;
+			bData0.style.backgroundColor = whiteColour;
+			bData1.style.backgroundColor = whiteColour;
+			localBGColour = 0;
+		break;
+	}
+}
+function getColour()
+ {	
+	bgColorr = ((window.localStorage.getItem("bgColour") !== null) ? window.localStorage.getItem("bgColour") : window.localStorage.setItem("bgColour",1)) ;
+}
+

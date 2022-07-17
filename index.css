@@ -1,55 +1,143 @@
-
-body {
+body 
+{
 	
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 16px;
 	overflow-wrap: break-word;
 }
+
 div.namesList
 {
 	text-align: center;
 }
 
-.arrow {
+#themeicon
+{
+	cursor: pointer;
+}
+
+@media screen and (min-height:1001px) 
+{
+	#themeicon img 
+	{
+		position: absolute;
+		right: 10px;
+		top: 15px;
+		max-width:3%;
+		max-height:3%;
+		object-fit: contain;
+	}
+}
+
+@media screen and (max-height: 505px) 
+{
+	#themeicon img 
+	{
+		position: absolute;
+		right: 10px;
+		top: 15px;
+		max-width:7%;
+		max-height:7%;
+		object-fit: contain;
+	}
+	
+}
+
+@media screen and (min-height:506px) 
+{
+	#themeicon img 
+	{
+		position: absolute;
+		right: 10px;
+		top: 6px;
+		max-width:3.5%;
+		max-height:3.5%;
+		object-fit: contain;
+	}
+	
+}
+
+.divider 
+{
+    background-color: #636161;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    margin: 21px auto;
+}
+
+.bData
+{
+	margin-right: 4%;
+	margin-left:  4%;
+}
+
+.bData-0, .bData-1
+{
+	border-radius: 2px;
+	border-style: solid;
+  	border-width: thin;
+}
+
+.bData-1
+{
+	margin-top: 1%;
+}
+
+.arrow 
+{
 	border: solid black;
 	border-width: 0 3px 3px 0;
 	display: inline-block;
 	padding: 3px;
-  }
+}
   
-  .up {
+.up 
+{
 	transform: rotate(-135deg);
 	-webkit-transform: rotate(-135deg);
-  }
+}
   
-  .down {
+.down 
+{
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
-  }
-
+}
 
 .label {
 	color: white;
 	padding: 8px;
 	font-family: Arial;
  }
-.cGreen {background-color: #04AA6D;} 
-.cBlue {background-color: #2196F3;} 
-.cRed {background-color: #f44336;} 
+
+.cGreen 
+{
+	background-color: #04AA6D;
+} 
+.cBlue 
+{
+	background-color: #2196F3;
+} 
+.cRed 
+{
+	background-color: #f44336;
+} 
 
 #hBold
 {
 	font-weight: bold;
 }
 
-
-.lHeight
+.s-c
 {
 	line-height: 1.5;
 	padding: 30px;
-	
 }
-
+.s-c-1
+{
+	line-height: 0;
+	padding: 30px;
+}
 .fRed
 {
 	color:red;
@@ -59,9 +147,26 @@ div.namesList
 	color:green;
 }
 
+#transactions
+{
+	margin-left: 20px;
+}
+
+#tran0, #tran1, #tran2
+{
+	cursor: pointer;
+}
+
+#ddID0, #ddID1, #ddID2
+{
+	border-bottom-color: rgba(200, 208, 212, 0.774);
+	border-bottom-style: solid;
+  	border-bottom-width: thin;
+	margin-bottom: 2ch;
+	
+}
 
 /* MonKey / addr / name table styling */
-
 
 table 
 {
@@ -99,7 +204,6 @@ table
 
 @media screen and (max-width: 500px) 
 {
-
 	table 
 	{
 		border: none;
@@ -111,20 +215,6 @@ table
 	vertical-align:middle;
 	width: 100%;
 	}
-
-
-}
-
-#themeicon {
-	position: relative;
-}
-#themeicon img {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	width: 5%;
-    height: auto;
-	max-width:3%;
 }
 
 dd
@@ -142,18 +232,18 @@ dd
 	margin-left: 40px;	
 }
 
+#pNums
+{
+	position: relative;
+	left: 25px;
+}
+
 button.page 
 { 
 	background:none;
 	border:none;
 	cursor: pointer;
 	font-weight:bolder;
-}
-
-#pNums
-{
-	position: relative;
-	left: 25px;
 }
 
 button.page.selected
